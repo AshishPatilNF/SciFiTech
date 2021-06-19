@@ -8,11 +8,9 @@ public class Player : MonoBehaviour
 
     float jumpHeight = 20f;
 
-    float customGravity = 9.8f;
+    float customGravity = 1f;
 
     float yVelocity = 0;
-
-    float mouseSensitivity = 5f;
 
     bool canDoubleJump = false;
 
