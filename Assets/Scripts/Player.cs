@@ -6,11 +6,13 @@ public class Player : MonoBehaviour
 {
     float speed = 5f;
 
-    float jumpHeight = 100f;
+    float jumpHeight = 20f;
 
     float customGravity = 9.8f;
 
     float yVelocity = 0;
+
+    float mouseSensitivity = 5f;
 
     bool canDoubleJump = false;
 
@@ -24,6 +26,11 @@ public class Player : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        MovementJump();
+    }
+
+    private void MovementJump()
     {
         Vector3 moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
         Vector3 customVelocity = moveDirection * speed;
@@ -47,6 +54,7 @@ public class Player : MonoBehaviour
         }
 
         customVelocity.y = yVelocity;
+        customVelocity = transform.TransformDirection(customVelocity);
         characterController.Move(customVelocity * Time.deltaTime);
     }
 }
