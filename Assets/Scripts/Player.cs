@@ -6,9 +6,9 @@ public class Player : MonoBehaviour
 {
     float speed = 5f;
 
-    float jumpHeight = 8f;
+    float jumpHeight = 100f;
 
-    float customGravity = 1f;
+    float customGravity = 9.8f;
 
     float yVelocity = 0;
 
