@@ -14,6 +14,9 @@ public class Player : MonoBehaviour
 
     bool canDoubleJump = false;
 
+    [SerializeField]
+    GameObject muzzleFlash;
+
     CharacterController characterController;
 
     // Start is called before the first frame update
@@ -21,6 +24,7 @@ public class Player : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
+        muzzleFlash.SetActive(false);
     }
 
     // Update is called once per frame
@@ -28,6 +32,19 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Cursor.lockState = CursorLockMode.None;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            muzzleFlash.SetActive(true);
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(ray, out hitInfo))
+                Debug.Log("Hit :" + hitInfo.transform.name);
+        }
+        else if (Input.GetMouseButtonUp(0))
+            muzzleFlash.SetActive(false);
+
         MovementJump();
     }
 
