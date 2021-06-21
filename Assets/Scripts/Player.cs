@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
@@ -32,13 +33,17 @@ public class Player : MonoBehaviour
 
     Coroutine reloadingAmmo = null;
 
+    UIManager uiManager;
+
     // Start is called before the first frame update
     void Start()
     {
         characterController = GetComponent<CharacterController>();
+        uiManager = FindObjectOfType<UIManager>();
         Cursor.lockState = CursorLockMode.Locked;
         muzzleFlash.SetActive(false);
         currentAmmo = maxAmmo;
+        uiManager.UpdateAmmo(currentAmmo);
     }
 
     // Update is called once per frame
@@ -51,15 +56,16 @@ public class Player : MonoBehaviour
         {
             muzzleFlash.SetActive(true);
             currentAmmo--;
+            uiManager.UpdateAmmo(currentAmmo);
 
             if (!weaponAudioSource.isPlaying)
                 weaponAudioSource.Play();
+
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hitInfo;
 
             if (Physics.Raycast(ray, out hitInfo))
             {
-                Debug.Log("Hit :" + hitInfo.transform.name);
                 GameObject newHitmarker = Instantiate(hitMarker, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                 Destroy(newHitmarker, 6f);
             }
@@ -113,6 +119,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(1.5f);
         currentAmmo = maxAmmo;
+        uiManager.UpdateAmmo(currentAmmo);
         reloadingAmmo = null;
     }
 }
