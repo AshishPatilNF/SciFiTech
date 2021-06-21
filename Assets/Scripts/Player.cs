@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField]
     int currentAmmo;
+    [SerializeField]
+    int coins = 0;
 
     int maxAmmo = 25;
 
@@ -19,6 +20,11 @@ public class Player : MonoBehaviour
     float yVelocity = 0;
 
     bool canDoubleJump = false;
+
+    bool holdingWeapon = false;
+
+    [SerializeField]
+    GameObject weaponActive;
 
     [SerializeField]
     GameObject muzzleFlash;
@@ -41,6 +47,7 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         uiManager = FindObjectOfType<UIManager>();
         Cursor.lockState = CursorLockMode.Locked;
+        weaponActive.SetActive(false);
         muzzleFlash.SetActive(false);
         currentAmmo = maxAmmo;
         uiManager.UpdateAmmo(currentAmmo);
@@ -52,18 +59,44 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             Cursor.lockState = CursorLockMode.None;
 
-        if (Input.GetMouseButton(0) && currentAmmo > 0)
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            if (weaponActive.activeSelf)
+            {
+                weaponActive.SetActive(false);
+                holdingWeapon = false;
+            }
+            else
+            {
+                weaponActive.SetActive(true);
+                holdingWeapon = true;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
+            RaycastHit hitInfo;
+
+            if (Physics.Raycast(ray, out hitInfo))
+            {
+                if (hitInfo.transform.GetComponent<Coins>())
+                    coins += hitInfo.transform.GetComponent<Coins>().GetValue();
+            }
+        }
+
+        if (Input.GetMouseButton(0) && currentAmmo > 0 && holdingWeapon)
         {
             muzzleFlash.SetActive(true);
             currentAmmo--;
             uiManager.UpdateAmmo(currentAmmo);
-
+            
             if (!weaponAudioSource.isPlaying)
                 weaponAudioSource.Play();
-
+            
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hitInfo;
-
+            
             if (Physics.Raycast(ray, out hitInfo))
             {
                 GameObject newHitmarker = Instantiate(hitMarker, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));

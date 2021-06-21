@@ -703,7 +703,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5b4730ff68074342ba63695ec8ff55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentAmmo: 0
+  coins: 0
+  weaponActive: {fileID: 518213187}
   muzzleFlash: {fileID: 1895617180}
   hitMarker: {fileID: 1278410308571632, guid: 0dca392d0ad60af418c1bace1abde0c6, type: 3}
   weaponAudioSource: {fileID: 518213188}
@@ -1057,6 +1058,38 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 844766876}
   m_CullTransparentMesh: 0
+--- !u!1 &911569880 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1312427962481228, guid: 93fb048d0136f084cb1f783ca99e5ea7,
+    type: 3}
+  m_PrefabInstance: {fileID: 2127443890}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &911569881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911569880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d0c659bc555f35419400f27111e9229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  coinSound: {fileID: 8300000, guid: 154cdb10bf6550c4e9ff4038ff2a660d, type: 3}
+--- !u!135 &911569884
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 911569880}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
