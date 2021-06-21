@@ -17,11 +17,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     GameObject muzzleFlash;
 
+    [SerializeField]
+    GameObject hitMarker;
+
+    [SerializeField]
+    AudioClip weaponAmmoSound;
+
+    AudioSource audioSource;
+
     CharacterController characterController;
 
     // Start is called before the first frame update
     void Start()
     {
+        audioSource = GetComponent<AudioSource>();
         characterController = GetComponent<CharacterController>();
         Cursor.lockState = CursorLockMode.Locked;
         muzzleFlash.SetActive(false);
@@ -36,14 +45,25 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(0))
         {
             muzzleFlash.SetActive(true);
+            audioSource.clip = weaponAmmoSound;
+            audioSource.Play();
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hitInfo;
 
             if (Physics.Raycast(ray, out hitInfo))
+            {
                 Debug.Log("Hit :" + hitInfo.transform.name);
+                GameObject newHitmarker = Instantiate(hitMarker, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                Destroy(newHitmarker, 6f);
+            }
         }
         else if (Input.GetMouseButtonUp(0))
+        {
             muzzleFlash.SetActive(false);
+
+            if (audioSource.clip == weaponAmmoSound)
+                audioSource.Stop();
+        }
 
         MovementJump();
     }
