@@ -19,6 +19,10 @@ public class Player : MonoBehaviour
 
     float yVelocity = 0;
 
+    float holdFireTime = 0.5f;
+
+    float nextFire = 0;
+
     bool canDoubleJump = false;
 
     bool holdingWeapon = false;
@@ -73,34 +77,38 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
             Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
             RaycastHit hitInfo;
-
+            
             if (Physics.Raycast(ray, out hitInfo))
             {
-                if (hitInfo.transform.GetComponent<Coins>())
+                if (hitInfo.transform.GetComponent<Coins>() && hitInfo.distance < 2f)
+                {
                     coins += hitInfo.transform.GetComponent<Coins>().GetValue();
+                    nextFire = Time.time + holdFireTime;
+                }
+                else if (currentAmmo > 0 && holdingWeapon && Time.time > nextFire)
+                {
+                    GameObject newHitmarker = Instantiate(hitMarker, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                    Destroy(newHitmarker, 6f);
+                }
             }
-        }
-
-        if (Input.GetMouseButton(0) && currentAmmo > 0 && holdingWeapon)
-        {
-            muzzleFlash.SetActive(true);
-            currentAmmo--;
-            uiManager.UpdateAmmo(currentAmmo);
             
-            if (!weaponAudioSource.isPlaying)
-                weaponAudioSource.Play();
-            
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            RaycastHit hitInfo;
-            
-            if (Physics.Raycast(ray, out hitInfo))
+            if (currentAmmo > 0 && holdingWeapon && Time.time > nextFire)
             {
-                GameObject newHitmarker = Instantiate(hitMarker, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
-                Destroy(newHitmarker, 6f);
+                muzzleFlash.SetActive(true);
+                currentAmmo--;
+                uiManager.UpdateAmmo(currentAmmo);
+                
+                if (!weaponAudioSource.isPlaying)
+                    weaponAudioSource.Play();
+            }
+            else
+            {
+                muzzleFlash.SetActive(false);
+                weaponAudioSource.Stop();
             }
         }
         else
