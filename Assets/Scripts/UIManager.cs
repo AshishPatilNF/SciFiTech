@@ -12,9 +12,17 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI ammoText;
 
+    [SerializeField]
+    TextMeshProUGUI coinCount;
+
     public void UpdateAmmo(int ammoCount)
     {
         ammoText.text = "" + ammoCount;
         ammoSlider.value = ammoCount;
+    }
+
+    public void UpdateCoinCount(int coins)
+    {
+        coinCount.text = "" + coins;
     }
 }

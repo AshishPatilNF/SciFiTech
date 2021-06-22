@@ -55,6 +55,7 @@ public class Player : MonoBehaviour
         muzzleFlash.SetActive(false);
         currentAmmo = maxAmmo;
         uiManager.UpdateAmmo(currentAmmo);
+        uiManager.UpdateCoinCount(coins);
     }
 
     // Update is called once per frame
@@ -87,6 +88,7 @@ public class Player : MonoBehaviour
                 if (hitInfo.transform.GetComponent<Coins>() && hitInfo.distance < 2f)
                 {
                     coins += hitInfo.transform.GetComponent<Coins>().GetValue();
+                    uiManager.UpdateCoinCount(coins);
                     nextFire = Time.time + holdFireTime;
                 }
                 else if (currentAmmo > 0 && holdingWeapon && Time.time > nextFire)
