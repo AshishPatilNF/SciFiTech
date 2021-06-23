@@ -108,6 +108,8 @@ public class Player : MonoBehaviour
                 }
                 else if (currentAmmo > 0 && holdingWeapon && Time.time > nextFire)
                 {
+                    if (hitInfo.transform.GetComponent<Crate>())
+                        hitInfo.transform.GetComponent<Crate>().CrateHit();
                     GameObject newHitmarker = Instantiate(hitMarker, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
                     Destroy(newHitmarker, 6f);
                 }
