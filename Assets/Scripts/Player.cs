@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Player : MonoBehaviour
 {
     int currentAmmo;
-    [SerializeField]
+
     int coins = 0;
 
     int maxAmmo = 25;
@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
     bool holdingWeapon = false;
 
     [SerializeField]
-    GameObject weaponActive;
+    GameObject activeWeapon;
 
     [SerializeField]
     GameObject muzzleFlash;
@@ -51,7 +51,6 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         uiManager = FindObjectOfType<UIManager>();
         Cursor.lockState = CursorLockMode.Locked;
-        weaponActive.SetActive(false);
         muzzleFlash.SetActive(false);
         currentAmmo = maxAmmo;
         uiManager.UpdateAmmo(currentAmmo);
@@ -64,16 +63,16 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
             Cursor.lockState = CursorLockMode.None;
 
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.G) && activeWeapon.transform.childCount > 0)
         {
-            if (weaponActive.activeSelf)
+            if (activeWeapon.activeSelf)
             {
-                weaponActive.SetActive(false);
+                activeWeapon.SetActive(false);
                 holdingWeapon = false;
             }
             else
             {
-                weaponActive.SetActive(true);
+                activeWeapon.SetActive(true);
                 holdingWeapon = true;
             }
         }
@@ -89,6 +88,22 @@ public class Player : MonoBehaviour
                 {
                     coins += hitInfo.transform.GetComponent<Coins>().GetValue();
                     uiManager.UpdateCoinCount(coins);
+                    nextFire = Time.time + holdFireTime;
+                }
+                else if (hitInfo.transform.GetComponent<SaleWeapon>() && hitInfo.distance < 2f)
+                {
+                    if (hitInfo.transform.GetComponent<SaleWeapon>().WeaponCost() <= coins)
+                    {
+                        coins -= hitInfo.transform.GetComponent<SaleWeapon>().WeaponCost();
+                        uiManager.UpdateCoinCount(coins);
+                        GameObject newWeapon = hitInfo.transform.GetComponent<SaleWeapon>().BuyWeapon();
+                        newWeapon.transform.parent = activeWeapon.transform;
+                        newWeapon.transform.localPosition = Vector3.zero;
+                        newWeapon.transform.localRotation = Quaternion.identity;
+                        newWeapon.transform.localScale = Vector3.one;
+                        activeWeapon.SetActive(true);
+                        holdingWeapon = true;
+                    }
                     nextFire = Time.time + holdFireTime;
                 }
                 else if (currentAmmo > 0 && holdingWeapon && Time.time > nextFire)
