@@ -1859,6 +1859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weaponForSale: {fileID: 518213187}
+  boughtWeaponSound: {fileID: 8300000, guid: 4bb10aeb4f80079438e51f131753f5d5, type: 3}
 --- !u!1 &1279688826
 GameObject:
   m_ObjectHideFlags: 0
