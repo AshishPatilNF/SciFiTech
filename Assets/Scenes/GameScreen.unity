@@ -733,6 +733,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 185b1cd35737b3b49b5ccd7617bd5962, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &373320481
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 373320483}
+  - component: {fileID: 373320482}
+  m_Layer: 8
+  m_Name: PostProcessingWeapon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &373320482
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373320481}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 9c802bdd3f457c24f9028f592524b806, type: 2}
+  isGlobal: 0
+  blendDistance: 0
+  weight: 1
+  priority: 0
+--- !u!4 &373320483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 373320481}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &374638541 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1233588775539414, guid: 93fb048d0136f084cb1f783ca99e5ea7,
@@ -1240,6 +1288,7 @@ MonoBehaviour:
   activeWeapon: {fileID: 169355447}
   muzzleFlash: {fileID: 1895617180}
   hitMarker: {fileID: 1278410308571632, guid: 0dca392d0ad60af418c1bace1abde0c6, type: 3}
+  weaponCamera: {fileID: 1979416529}
   weaponAudioSource: {fileID: 518213188}
 --- !u!1 &676255008
 GameObject:
@@ -3355,7 +3404,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 1979416530}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 256
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
   antialiasingMode: 0

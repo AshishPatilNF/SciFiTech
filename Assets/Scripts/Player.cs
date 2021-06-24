@@ -37,6 +37,9 @@ public class Player : MonoBehaviour
     GameObject hitMarker;
 
     [SerializeField]
+    Camera weaponCamera;
+
+    [SerializeField]
     AudioSource weaponAudioSource;
 
     CharacterController characterController;
@@ -51,6 +54,8 @@ public class Player : MonoBehaviour
         characterController = GetComponent<CharacterController>();
         uiManager = FindObjectOfType<UIManager>();
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        weaponCamera.gameObject.SetActive(false);
         muzzleFlash.SetActive(false);
         currentAmmo = maxAmmo;
         uiManager.UpdateAmmo(currentAmmo);
@@ -61,7 +66,13 @@ public class Player : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
+        {
             Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            Application.Quit();
 
         if (Input.GetKeyDown(KeyCode.G) && activeWeapon.transform.childCount > 0)
         {
@@ -101,6 +112,7 @@ public class Player : MonoBehaviour
                         newWeapon.transform.localPosition = Vector3.zero;
                         newWeapon.transform.localRotation = Quaternion.identity;
                         newWeapon.transform.localScale = Vector3.one;
+                        weaponCamera.gameObject.SetActive(true);
                         activeWeapon.SetActive(true);
                         holdingWeapon = true;
                     }
