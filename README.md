@@ -17,7 +17,7 @@ SciFi Tech is a First Person Shooter Demo game.
 
 6. Player can Quit the game at any given moment by pressing the "Q Key".
 
-This project was developed for the better understanding of Unity Engine's CharacterController, Nav Mesh, and C# basics.
+This project was developed for the better understanding of Unity Engine's CharacterController, Nav Mesh, RayCasting, using mouse to look around and C# basics.
 
 This project was developed as a part of the Udemy course "The Ultimate Guide to Game Development with Unity 2019" under the guidance of Jonathan Weinberger.
 
