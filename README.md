@@ -15,7 +15,9 @@ SciFi Tech is a First Person Shooter Demo game.
 
 5. Use the "G Key" to holster or unholster the gun once it is purchased.
 
-6. Player can Quit the game at any given moment by pressing the "Q Key".
+6. Use the "Space Key" to perform a mini Jump.
+
+7. Player can Quit the game at any given moment by pressing the "Q Key".
 
 This project was developed for the better understanding of Unity Engine's CharacterController, Nav Mesh, RayCasting, using mouse to look around and C# basics.
 
