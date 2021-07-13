@@ -22,4 +22,3 @@ SciFi Tech is a First Person Shooter Demo game.
 This project was developed for the better understanding of Unity Engine's CharacterController, Nav Mesh, RayCasting, 3D Colliders and C# basics.
 
 This project was developed as a part of the Udemy course "The Ultimate Guide to Game Development with Unity 2019" under the guidance of Jonathan Weinberger.
-
